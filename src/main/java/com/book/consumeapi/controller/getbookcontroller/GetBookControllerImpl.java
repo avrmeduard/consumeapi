@@ -1,7 +1,5 @@
 package com.book.consumeapi.controller.getbookcontroller;
 
-import com.book.consumeapi.model.bookmodel.Book;
-import com.book.consumeapi.model.getbook.GetBook;
 import com.book.consumeapi.model.getbook.GetBookResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,8 +11,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +24,9 @@ public class GetBookControllerImpl implements GetBookController{
     @Value("${mvc.getendpoint}")
     private String getEndPoint;
 
+    @Value("${mvc.getendpointbyid}")
+    private String getEntPointById;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -35,7 +34,38 @@ public class GetBookControllerImpl implements GetBookController{
 
 
     @Override
-    public ResponseEntity<?> getBookSummary(Optional<Integer> bookId) {
+    public ResponseEntity<?> getBookSummary() {
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(basePath+getEndPoint,
+                                                                       HttpMethod.GET,
+                                                                       httpEntity,
+                                                                       String.class );
+
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+
+            try {
+
+                GetBookResponse getBook = objectMapper.readValue(responseEntity.getBody(), GetBookResponse.class);
+                return new ResponseEntity<>(getBook, HttpStatus.OK);
+
+            } catch (JsonProcessingException e) {
+
+                e.printStackTrace();
+                return new ResponseEntity<>("Invalid request", HttpStatus.BAD_REQUEST);
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> getBookById(Optional<Integer> bookId) {
 
         log.info("Called /rest-getBook");
         log.debug("Called /rest-getBook witch bookId = " + bookId);
@@ -46,21 +76,18 @@ public class GetBookControllerImpl implements GetBookController{
             log.debug("BookId = " + bookId.get());
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add(httpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            httpHeaders.add(httpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 
             HttpEntity httpEntity = new HttpEntity(httpHeaders);
 
-            ResponseEntity<String> responseEntity = restTemplate.exchange(basePath+getEndPoint+"?bookId={id}",
-                    HttpMethod.GET,
-                    httpEntity,
-                    String.class,
-                    bookId.get() );
-
-            System.out.println(responseEntity.getBody());
+            ResponseEntity<String> responseEntity = restTemplate.exchange(basePath+getEntPointById+"?bookId={id}",
+                                                                           HttpMethod.GET,
+                                                                           httpEntity,
+                                                                           String.class,
+                                                                           bookId.get() );
 
             if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-
 
                 try {
 
@@ -69,7 +96,6 @@ public class GetBookControllerImpl implements GetBookController{
                     log.info("Book found and added to the list");
                     log.debug("Book found and added: " + getBook.toString());
 
-                    //
                     return new ResponseEntity<>(getBook, HttpStatus.OK);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
