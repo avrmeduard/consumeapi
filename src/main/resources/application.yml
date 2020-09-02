@@ -1,6 +1,7 @@
 mvc:
   basepath: http://localhost:8081/
   getendpoint: getBook
+  getendpointbyid: getBook/
   addendpoint: addBook
 logging:
   file: logs/mvc_pattern2.log
