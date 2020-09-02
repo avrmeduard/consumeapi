@@ -8,4 +8,4 @@ logging:
     console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n"
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
-    com.smartacademy.*: INFO
+    ROOT: INFO
