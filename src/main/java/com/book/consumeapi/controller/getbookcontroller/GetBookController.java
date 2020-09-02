@@ -19,7 +19,24 @@ import java.util.Optional;
      description = "Consumer API for book")
 public interface GetBookController {
 
-    @ApiOperation(value = "Get book", nickname = "rest-getBook")
+
+    @ApiOperation(value = "Get all books", nickname = "rest-getBook")
+    @ApiResponses(value = {@ApiResponse(code = HttpServletResponse.SC_OK,
+                                        message = "Result matching criteria",
+                                        response = GetBookResponse.class),
+
+                           @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST,
+                                        message = "Invalid request",
+                                        response = GetBookResponse.class),
+
+                           @ApiResponse(code = HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                                        message = "Method not allowed",
+                                        response = ErrorResponse.class) })
+    @GetMapping("/rest-getBook")
+    ResponseEntity<?> getBookSummary();
+
+
+    @ApiOperation(value = "Get book", nickname = "rest-getBookId")
     @ApiResponses(value = {@ApiResponse(code = HttpServletResponse.SC_OK,
                                         message = "Result matching criteria",
                                         response = GetBookResponse.class),
@@ -35,7 +52,7 @@ public interface GetBookController {
                            @ApiResponse(code = HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                                         message = "Method not allowed",
                                         response = ErrorResponse.class) })
-    @GetMapping("/rest-getBook")
-    ResponseEntity<?> getBookSummary(@RequestParam Optional<Integer> bookId);
+    @GetMapping("/rest-getBook/")
+    ResponseEntity<?> getBookById(@RequestParam Optional<Integer> bookId);
 }
 
