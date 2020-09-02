@@ -1,9 +1,6 @@
 package com.book.consumeapi.model.getbook;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -66,6 +63,7 @@ public class GetBook {
      */
     @JsonProperty("numberOfPages")
     @JsonPropertyDescription(" Book number of pages.")
+    @JsonIgnore
     private Integer numberOfPages;
 
     /**
@@ -180,6 +178,7 @@ public class GetBook {
      *
      */
     @JsonProperty("numberOfPages")
+    @JsonIgnore
     public Integer getNumberOfPages() {
         return numberOfPages;
     }
@@ -189,6 +188,7 @@ public class GetBook {
      *
      */
     @JsonProperty("numberOfPages")
+    @JsonIgnore
     public void setNumberOfPages(Integer numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
