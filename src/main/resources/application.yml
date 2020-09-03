@@ -3,6 +3,9 @@ mvc:
   getendpoint: getBook
   getendpointbyid: getBook/
   addendpoint: addBook
+  updateendpoint: updateBook
+  deleteendpoint: deleteBook
+  deleteendpointbyid: deleteBook/
 logging:
   file: logs/mvc_pattern2.log
   pattern:
