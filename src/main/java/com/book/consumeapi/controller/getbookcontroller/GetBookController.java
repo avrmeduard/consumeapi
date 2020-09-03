@@ -63,6 +63,6 @@ public interface GetBookController {
                                         message = "Method not allowed",
                                         response = ErrorResponse.class) })
     @GetMapping("/rest-getBook/")
-    ResponseEntity<?> getBookbyId(@RequestParam Optional<Integer> bookId);
+    ResponseEntity<?> getBookById(@RequestParam Optional<Integer> bookId);
 }
 
