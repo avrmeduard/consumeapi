@@ -20,12 +20,17 @@ import java.util.Optional;
 public interface GetBookController {
 
 
+    /**
+     *
+     * Get all books
+     *
+     */
     @ApiOperation(value = "Get all books", nickname = "rest-getBook")
     @ApiResponses(value = {@ApiResponse(code = HttpServletResponse.SC_OK,
                                         message = "Result matching criteria",
                                         response = GetBookResponse.class),
 
-                           @ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST,
+                           @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND,
                                         message = "Invalid request",
                                         response = GetBookResponse.class),
 
@@ -36,12 +41,17 @@ public interface GetBookController {
     ResponseEntity<?> getBookSummary();
 
 
+    /**
+     *
+     * Get book by id
+     *
+     */
     @ApiOperation(value = "Get book", nickname = "rest-getBookId")
     @ApiResponses(value = {@ApiResponse(code = HttpServletResponse.SC_OK,
                                         message = "Result matching criteria",
                                         response = GetBookResponse.class),
 
-                           @ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                           @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND,
                                         message = "Book Id does not exist",
                                         response = ErrorResponse.class),
 
