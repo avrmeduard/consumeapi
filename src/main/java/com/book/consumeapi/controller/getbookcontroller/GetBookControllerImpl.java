@@ -34,7 +34,7 @@ public class GetBookControllerImpl implements GetBookController{
 
 
     @Override
-    public ResponseEntity<?> getBookSummary() {
+    public ResponseEntity<?> getBook() {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
