@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-@Api(value = "rest-getBook",
+@Api(value = "rest-deleteBook",
      description = "Consumer API for book")
 public interface DeleteBookController {
 
